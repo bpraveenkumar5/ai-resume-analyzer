@@ -25,6 +25,17 @@ load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
+# Get key from Streamlit Secrets when deployed
+if not GROQ_API_KEY:
+    try:
+        GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+    except Exception:
+        GROQ_API_KEY = None
+
+if not GROQ_API_KEY:
+    st.error("Groq API key is not configured.")
+    st.stop()
+
 
 # =========================================================
 # 3. CHECK API KEY
